@@ -178,7 +178,7 @@ class BootstrapMediumIT {
       .addProperty(SONAR_PROJECT_KEY, PROJECT_KEY)
       .addProperty(SONAR_PROJECT_BASE_DIR, baseDir.toString()));
 
-    assertTrue("This should be true", true);
+    assertThat(true).isTrue();
     //assertThat(logTester.logs()).contains("SonarScanner Engine completed successfully");
   }
 
