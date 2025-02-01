@@ -25,12 +25,14 @@ import org.sonar.application.command.CommandFactoryImpl;
 import org.sonar.application.config.AppSettings;
 import org.sonar.application.config.AppSettingsLoader;
 import org.sonar.application.config.AppSettingsLoaderImpl;
+import org.sonar.core.datelogger.DateLogger;
 import org.sonar.core.extension.ServiceLoaderWrapper;
 import org.sonar.process.System2;
 import org.sonar.process.SystemExit;
 
 import static org.sonar.application.config.SonarQubeVersionHelper.getSonarqubeVersion;
 import static org.sonar.process.ProcessProperties.Property.CLUSTER_NAME;
+
 
 public class App {
 
@@ -39,6 +41,9 @@ public class App {
   private StopRequestWatcher hardStopRequestWatcher = null;
 
   public void start(String[] cliArguments) {
+
+    DateLogger.createDateLog();
+
     AppSettingsLoader settingsLoader = new AppSettingsLoaderImpl(System2.INSTANCE, cliArguments, new ServiceLoaderWrapper());
     AppSettings settings = settingsLoader.load();
     // order is important - logging must be configured before any other components (AppFileSystem, ...)
