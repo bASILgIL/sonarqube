@@ -48,17 +48,13 @@ public class DateLoggerTest {
   }
 
   @Test
-  public void testCreateDateLogDate()
+  public void testCreateDateLogDate() throws IOException
   {
     // Make sure the content of the file starts with 2025
     DateLogger.createDateLog();
     String filePath = Paths.get("", "last_startup.txt").toAbsolutePath().toString();
-    try{
-      String content = Files.readString(Paths.get(filePath));
-      assertTrue(content.startsWith("2025"), "The log file should start with 2025");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    
+    String content = Files.readString(Paths.get(filePath));
+    assertTrue(content.startsWith("2025"), "The log file should start with 2025");
+  
   }
 }
