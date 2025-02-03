@@ -31,7 +31,7 @@ public class DateLogger {
       String filePath = Paths.get(currentDir, "last_startup.txt").toString();
 
       try (FileWriter writer = new FileWriter(filePath)) {
-        writer.write(java.time.LocalDateTime.now().toString());
+        writer.write(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         return true;
       } catch (IOException e) {
         e.printStackTrace();

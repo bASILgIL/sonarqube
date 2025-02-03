@@ -54,7 +54,11 @@ public class DateLoggerTest {
     DateLogger.createDateLog();
     String filePath = Paths.get("", "last_startup.txt").toAbsolutePath().toString();
     String content = Files.readString(Paths.get(filePath));
-    assertTrue(content.startsWith("2025"), "The log file should start with 2025");
+    
+    String currentDateTime = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+    // Make sure the content of the file is the current date and time
+    assertEquals(currentDateTime, content, "The log file should contain the current date and time");
   
   }
 }
