@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 
 public class DateLogger {
 
+    // Create a text file with the current date and time
     public static boolean createDateLog()
     {
       String currentDir = Paths.get("").toAbsolutePath().toString();
