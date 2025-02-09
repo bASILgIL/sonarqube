@@ -38,3 +38,29 @@ jobs:
       run: |
         cd ./sonar-application/build/distributions/sonarqube-25.2-SNAPSHOT/bin/linux-x86-64
         ./sonar.sh start
+
+    - name: Restart SonarQube and Check Reboot Time
+      run: |
+        cd ./sonar-application/build/distributions/sonarqube-25.2-SNAPSHOT/bin/linux-x86-64
+
+        echo "Stopping SonarQube..."
+        ./sonar.sh stop
+        sleep 5  # Ensure shutdown completes
+
+        echo "Restarting SonarQube..."
+        START_TIME=$(date +%s)
+        ./sonar.sh start
+
+        echo "Waiting for SonarQube to be up..."
+        TIMEOUT=120  # 2 minutes timeout
+        while [[ $(( $(date +%s) - START_TIME )) -lt $TIMEOUT ]]; do
+          STATUS=$(curl -s http://localhost:9000/api/system/status | jq -r '.status')
+          if [[ "$STATUS" == "UP" ]]; then
+            echo "SonarQube restarted successfully in $(( $(date +%s) - START_TIME )) seconds."
+            exit 0
+          fi
+          sleep 5
+        done
+
+        echo "ERROR: SonarQube did not restart within 2 minutes!"
+        exit 1
