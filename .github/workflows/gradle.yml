@@ -39,6 +39,7 @@ jobs:
         cd ./sonar-application/build/distributions/sonarqube-25.2-SNAPSHOT/bin/linux-x86-64
         ./sonar.sh start
 
+    # Resilience test
     - name: Restart SonarQube and Measure Average Reboot Time
   run: |
     cd ./sonar-application/build/distributions/sonarqube-25.2-SNAPSHOT/bin/linux-x86-64
